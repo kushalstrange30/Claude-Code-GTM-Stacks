@@ -133,11 +133,15 @@ tools."*
 
 ---
 
-## 7. The film: 25s cut (built with /brag)
+## 7. The film: 60s product-led cut (built with /brag)
 
-- [`brag-output/brag.mp4`](./brag-output/brag.mp4): 1920×1080 · 30fps · 25s · -15.6 LUFS, with the poster baked into frame 0
+The first 15.6 seconds are the Edison setup. The remaining 44 seconds are Default in action: one inbound lead goes from anonymous visitor to booked meeting, through Website intent → Forms → Waterfall enrichment → AI qualification → Routing → Scheduling → Workflows + Dot. Then come the full system and the payoff.
+
+- [`brag-output/brag.mp4`](./brag-output/brag.mp4): 1920×1080 · 30fps · 60s, with the poster baked into frame 0
 - [`brag-output/brag.jpg`](./brag-output/brag.jpg): the poster frame
-- [`brag-output/brag-plan.md`](./brag-output/brag-plan.md): the rubric and the tick-synced storyboard
-- [`brag-output/share-copy.txt`](./brag-output/share-copy.txt): launch copy for LinkedIn and X
+- [`brag-output/brag-plan.md`](./brag-output/brag-plan.md): the rubric and the beat-by-beat storyboard
+- [`brag-output/share-copy.txt`](./brag-output/share-copy.txt): launch copy
 - [`brag-output/composition/`](./brag-output/composition): the editable HyperFrames source. Re-render with `npx hyperframes render --quality delivery`
-- [`brag-output/scripts/make_score.py`](./brag-output/scripts/make_score.py): the original synthesized score. The same tick map drives the picture and the sound.
+- [`brag-output/scripts/make_score.py`](./brag-output/scripts/make_score.py): the original synthesized score and the shared cue map
+
+> The product UI in the film is a stylized recreation built from Default's public product descriptions, not real screenshots. Swap in real product captures before a paid launch.

@@ -2,17 +2,18 @@ LINKEDIN
 Everyone remembers the bulb.
 Nobody remembers it was useless without the wire.
 
-In 1882 Edison lit 82 customers on Pearl Street by building the wire first.
-In 1908 he went after the film stock, the reels and the theaters.
-The one time he lost, he lost to a current that traveled farther.
+Edison built the grid before he sold the light. In the AI race it's the same play, measured in seconds:
 
-The AI race is the same play, measured in seconds instead of years. Products get copied in weeks. What you can't copy is how fast you reach the buyer: enriched, qualified, routed and booked before the tab closes.
+11:58 PM. A VP of Sales asks for a demo.
+Default de-anonymizes the visit, enriches the record source by source, scores it Tier 1, routes it to the right rep and books the meeting before the tab closes. Slack, CRM and a brief from Dot follow automatically.
 
+Not eight tools. One current.
 Anyone can build the bulb. Own the current.
-Distribution is the Product. · Default
+
+Distribution is the Product. · default.com
 
 X / THREADS
-Everyone remembers the bulb. Nobody remembers it was useless without the wire.
+Anonymous visitor → enriched → qualified → routed → booked. Before the tab closes.
 Anyone can build the bulb. Own the current.
 Distribution is the Product. · default.com
 
