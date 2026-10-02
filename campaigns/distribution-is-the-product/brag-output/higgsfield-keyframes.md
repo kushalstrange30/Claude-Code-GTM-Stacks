@@ -12,5 +12,7 @@ The prompts follow Default's brand kit (extracted from default.com): deep neutra
 | Ending 2 | Earth from orbit, with arcs of light linking cities | 7553d743-0fea-420c-bb54-37a6a276743f |
 | Ending 3 | A dark glass squircle monolith with a circular opening, lit emerald (an echo of the Default mark) | c3900145-1d7c-4f72-8c6e-4f85686aff47 |
 
-To pull them into the composition, run `scripts/fetch_keyframes.sh`. It needs `d8j0ntlcm91z4.cloudfront.net` on the environment's allowed domains.
+Five of the six are in the cut (in `composition/assets/img/hf/`). The rooftop frame was dropped at your request.
+
+To re-pull them, run `scripts/fetch_keyframes.sh`. It needs `d8j0ntlcm91z4.cloudfront.net` on the environment's allowed domains.
 If you'd rather not change the network policy, download the frames from the Higgsfield gallery and commit them to `composition/assets/img/hf/` using the names in the script.

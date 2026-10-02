@@ -133,15 +133,22 @@ tools."*
 
 ---
 
-## 7. The film: 60s product-led cut (built with /brag)
+## 7. The film: 60s, in Default's brand (HyperFrames + Higgsfield)
 
-The first 15.6 seconds are the Edison setup. The remaining 44 seconds are Default in action: one inbound lead goes from anonymous visitor to booked meeting, through Website intent → Forms → Waterfall enrichment → AI qualification → Routing → Scheduling → Workflows + Dot. Then come the full system and the payoff.
+The film is restyled to match default.com, read through a brand-kit extraction of the live site:
+- deep neutral dark backgrounds with thin borders
+- **Inter** for display and UI, **Geist Mono** for system and terminal text
+- accents: Emerald #10b981, Cyan #0ea5e9, Purple #8b5cf6 for Dot, Amber #f59e0b for partial states
+- the site's own line, "Deploy agents that work across your go-to-market"
 
-- [`brag-output/brag.mp4`](./brag-output/brag.mp4): 1920×1080 · 30fps · 60s, with the poster baked into frame 0
-- [`brag-output/brag.jpg`](./brag-output/brag.jpg): the poster frame
-- [`brag-output/brag-plan.md`](./brag-output/brag-plan.md): the rubric and the beat-by-beat storyboard
-- [`brag-output/share-copy.txt`](./brag-output/share-copy.txt): launch copy
+| Time | Section | Visuals |
+|---|---|---|
+| 0–15.6s | Motivational opening | Higgsfield spark → Edison photo → Higgsfield city network (Pearl Street, 82 customers) → the Trust as a terminal log → AC vs DC → switchboard → an emerald sweep |
+| 15.6–47.1s | Default in action | Seven beats in the app window: intent, forms, waterfall enrichment, qualification (Dot), routing, scheduling, workflows (Slack/CRM/Dot) |
+| 47.1–60s | Futuristic ending | Higgsfield agent hall ("Not eight tools. One control plane."), Earth network ("Anyone can build the bulb."), then the glass squircle with **Distribution is the product.**, the Default lockup and default.com |
+
+- [`brag-output/brag.mp4`](./brag-output/brag.mp4): 1920×1080 · 30fps · 60s
+- [`brag-output/higgsfield-keyframes.md`](./brag-output/higgsfield-keyframes.md): key-frame prompts and job IDs
 - [`brag-output/composition/`](./brag-output/composition): the editable HyperFrames source. Re-render with `npx hyperframes render --quality delivery`
-- [`brag-output/scripts/make_score.py`](./brag-output/scripts/make_score.py): the original synthesized score and the shared cue map
 
-> The product UI in the film is a stylized recreation built from Default's public product descriptions, not real screenshots. Swap in real product captures before a paid launch.
+> Pending real assets: the product UI is an on-brand recreation and the logo is an approximation of the squircle mark. Swap in the official SVG and real screen recordings before a paid launch.
