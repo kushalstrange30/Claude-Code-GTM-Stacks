@@ -130,3 +130,14 @@ tools."*
 [ETHW: Edison's Electric Light and Power System](https://ethw.org/Edison%27s_Electric_Light_and_Power_System) ·
 [Motion Picture Patents Company](https://en.wikipedia.org/wiki/Motion_Picture_Patents_Company) ·
 [US v. Motion Picture Patents Co.](https://en.wikipedia.org/wiki/United_States_v._Motion_Picture_Patents_Co.)
+
+---
+
+## 7. The film: 25s cut (built with /brag)
+
+- [`brag-output/brag.mp4`](./brag-output/brag.mp4): 1920×1080 · 30fps · 25s · -15.6 LUFS, with the poster baked into frame 0
+- [`brag-output/brag.jpg`](./brag-output/brag.jpg): the poster frame
+- [`brag-output/brag-plan.md`](./brag-output/brag-plan.md): the rubric and the tick-synced storyboard
+- [`brag-output/share-copy.txt`](./brag-output/share-copy.txt): launch copy for LinkedIn and X
+- [`brag-output/composition/`](./brag-output/composition): the editable HyperFrames source. Re-render with `npx hyperframes render --quality delivery`
+- [`brag-output/scripts/make_score.py`](./brag-output/scripts/make_score.py): the original synthesized score. The same tick map drives the picture and the sound.

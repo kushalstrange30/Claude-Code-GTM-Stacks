@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>The Current — Distribution is the Product</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Cormorant"; font-weight: 500; font-style: normal; src: url("assets/fonts/cormorant-garamond-latin-500-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Cormorant"; font-weight: 500; font-style: italic; src: url("assets/fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2"); }
+      @font-face { font-family: "Cormorant"; font-weight: 600; font-style: normal; src: url("assets/fonts/cormorant-garamond-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Cormorant"; font-weight: 600; font-style: italic; src: url("assets/fonts/cormorant-garamond-latin-600-italic.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 800; src: url("assets/fonts/inter-latin-800-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Plex Mono"; font-weight: 400; src: url("assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Plex Mono"; font-weight: 500; src: url("assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); }
+
+      :root {
+        --paper: #ece7dd;
+        --ash: #a39e94;
+        --ink: #050505;
+        --filament: #ffa040;
+        --cyan: #8fe6ff;
+        --steel: #29465c;
+        --amber: #f4bb6c;
+        --night: #060a12;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--ink); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--ink); color: var(--paper); font-family: "Cormorant", serif; }
+
+      .clip { width: 100%; height: 100%; overflow: hidden; }
+      .scene { position: absolute; inset: 0; }
+      .plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      .super {
+        position: absolute; left: 120px; top: 96px;
+        font-family: "Plex Mono", monospace; font-weight: 500; font-size: 26px; letter-spacing: 0.22em;
+        color: var(--ash); text-transform: uppercase;
+      }
+      .line {
+        position: absolute; left: 0; right: 0; bottom: 120px; display: flex; justify-content: center;
+        font-style: italic; font-weight: 500; font-size: 88px; line-height: 1.05; color: var(--paper);
+        text-align: center; padding: 0 160px;
+      }
+      .line span { display: block; }
+      .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,5,5,0) 45%, rgba(5,5,5,0.88) 100%); }
+
+      /* S1 bulb */
+      #s1-glow { position: absolute; left: 760px; top: 140px; width: 400px; height: 400px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,160,64,0.55) 0%, rgba(255,160,64,0.12) 40%, rgba(255,160,64,0) 70%); opacity: 0; }
+      #s1-bulb { position: absolute; left: 810px; top: 120px; width: 300px; height: 520px; display: block; }
+      #s1-year { left: 0; right: 0; top: 700px; text-align: center; letter-spacing: 0.5em; }
+
+      /* S3 Pearl Street */
+      #s3-svg { position: absolute; inset: 0; width: 1920px; height: 1080px; display: block; }
+      #s3-count { position: absolute; right: 120px; top: 92px; font-family: "Plex Mono", monospace; font-size: 26px; letter-spacing: 0.22em; color: var(--ash); }
+      #s3-count b { color: var(--filament); font-weight: 500; font-size: 34px; }
+
+      /* S4 The Trust */
+      .sprockets { position: absolute; top: -200px; width: 120px; height: 1700px; display: block; }
+      #s4-left { left: 60px; }
+      #s4-right { right: 60px; }
+      #s4-beam { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 50% 45%, rgba(236,231,221,0.16), rgba(5,5,5,0) 70%); }
+      #s4-stack { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px;
+        font-weight: 600; font-size: 128px; line-height: 1; color: var(--paper); }
+      #s4-stack div { display: block; }
+
+      /* S5 AC lines */
+      #s5-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #1b1b1b 0%, #3a3a3a 52%, #0c0c0c 56%, #050505 100%); }
+      #s5-svg { position: absolute; inset: 0; width: 1920px; height: 1080px; display: block; }
+      #s5-text { position: absolute; left: 0; right: 0; top: 700px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+        font-style: italic; font-weight: 500; font-size: 84px; line-height: 1.05; text-align: center; color: var(--paper); }
+      #s5-text div { display: block; }
+      .glow-word { color: var(--filament); }
+
+      /* S6 flare */
+      #flare { background: radial-gradient(circle at 45% 50%, #fffaf0 0%, #ffe9c4 35%, rgba(255,233,196,0) 75%); opacity: 0; }
+
+      /* S7 modern */
+      #s7-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at 50% 55%, #0e1a2c 0%, var(--night) 70%); }
+      #s7-grid { position: absolute; inset: 0; opacity: 0.35;
+        background-image: linear-gradient(rgba(143,230,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(143,230,255,0.06) 1px, transparent 1px);
+        background-size: 60px 60px; }
+      #s7-super { color: #8aa3b8; }
+      #s7-watch { position: absolute; right: 120px; top: 80px; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; font-family: "Plex Mono", monospace; color: #8aa3b8; }
+      #s7-watch div { display: block; line-height: 1; }
+      #s7-watch .lbl { font-size: 20px; letter-spacing: 0.24em; }
+      #s7-time { font-size: 64px; font-weight: 500; color: var(--cyan); letter-spacing: 0.04em; }
+      #s7-watch .dram { font-size: 16px; letter-spacing: 0.2em; color: #7d93a6; }
+      #s7-head { position: absolute; left: 0; right: 0; top: 300px; height: 120px; }
+      #s7-head div { position: absolute; left: 0; right: 0; text-align: center; font-style: italic; font-weight: 500; font-size: 92px; line-height: 1.1; color: #eef3f7; }
+      #s7-head em { color: var(--amber); }
+      #s7-wire { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; }
+      #s7-nodes { position: absolute; left: 120px; right: 120px; top: 570px; display: flex; justify-content: space-between; }
+      .node { width: 310px; height: 180px; border: 1.5px solid var(--steel); border-radius: 14px; background: rgba(8,16,28,0.92);
+        padding: 26px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+      .node .k { font-family: "Inter", sans-serif; font-weight: 800; font-size: 30px; letter-spacing: 0.16em; color: #6f889c; }
+      .node .v { font-family: "Plex Mono", monospace; font-size: 23px; color: #6f889c; }
+      .node .lit-k { color: var(--cyan); }
+      .node .lit-v { color: #cfeaf5; }
+
+      /* S8 tower */
+      #s8-text { position: absolute; left: 120px; bottom: 120px; font-style: italic; font-weight: 500; font-size: 92px; color: #fff4e4; }
+
+      /* S9 payoff */
+      #s9-wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      #s9-title { font-weight: 600; font-size: 92px; letter-spacing: 0.07em; color: var(--paper); text-align: center; line-height: 1; }
+      #s9-rule { width: 520px; height: 2px; margin-top: 44px; background: var(--filament); box-shadow: 0 0 18px rgba(255,160,64,0.8); display: block; }
+      #s9-own { margin-top: 40px; font-style: italic; font-weight: 500; font-size: 58px; color: var(--paper); }
+      #s9-brand { margin-top: 70px; display: flex; align-items: baseline; gap: 28px; }
+      #s9-logo { font-family: "Inter", sans-serif; font-weight: 800; font-size: 72px; letter-spacing: -0.03em; color: #ffffff; }
+      #s9-url { font-family: "Plex Mono", monospace; font-size: 24px; letter-spacing: 0.14em; color: var(--ash); }
+
+      /* Global film treatment */
+      .overlay { position: absolute; inset: 0; pointer-events: none; }
+      #grain { background-image: url("assets/img/grain.png"); background-size: 512px 512px; mix-blend-mode: overlay; opacity: 0.22; z-index: 40; }
+      #flicker { background: #000; opacity: 0; z-index: 41; }
+      #vignette { background: radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.7) 100%); z-index: 42; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="25" data-width="1920" data-height="1080" data-fps="30">
+
+      <!-- S1 · Hook: the filament -->
+      <section id="s1" class="clip" data-start="0" data-duration="3.071" data-track-index="0">
+        <div class="scene">
+          <div id="s1-glow"></div>
+          <svg id="s1-bulb" viewBox="0 0 300 520" aria-hidden="true">
+            <path d="M150 20 C 60 20 20 90 20 160 C 20 230 70 270 95 320 L 95 380 L 205 380 L 205 320 C 230 270 280 230 280 160 C 280 90 240 20 150 20 Z" fill="none" stroke="#3c3c3c" stroke-width="2.5" />
+            <path d="M110 395 H190 M112 412 H188 M116 429 H184 M122 446 H178" stroke="#3c3c3c" stroke-width="5" stroke-linecap="round" />
+            <path d="M126 380 L126 260 M174 380 L174 260" stroke="#4a4a4a" stroke-width="2" />
+            <path id="s1-fil" d="M126 260 L132 200 L140 250 L148 190 L156 250 L164 190 L172 250 L174 260" fill="none" stroke="#3a2a1a" stroke-width="3.5" stroke-linejoin="round" />
+          </svg>
+          <div id="s1-year" class="super">1879</div>
+          <div class="line"><span id="s1-line">Everyone remembers the bulb.</span></div>
+        </div>
+      </section>
+
+      <!-- S2 · The bulb was the easy part -->
+      <section id="s2" class="clip" data-start="3.071" data-duration="2.458" data-track-index="0">
+        <div class="scene">
+          <img id="s2-img" class="plate" src="assets/img/bulb.jpg" alt="" />
+          <div class="scrim"></div>
+          <div class="line"><span id="s2-line">The bulb was the easy part.</span></div>
+        </div>
+      </section>
+
+      <!-- S3 · Pearl Street, 82 windows -->
+      <section id="s3" class="clip" data-start="5.529" data-duration="3.506" data-track-index="0">
+        <div class="scene">
+          <svg id="s3-svg" viewBox="0 0 1920 1080" aria-hidden="true">
+            <g id="s3-buildings"></g>
+            <path id="s3-cable" d="M0 812 H1920" stroke="#c98a4a" stroke-width="3" fill="none" />
+            <g id="s3-windows"></g>
+          </svg>
+          <div id="s3-super" class="super">Sept 4, 1882 &middot; Pearl Street, New York</div>
+          <div id="s3-count"><b id="s3-n">0</b> &nbsp;CUSTOMERS</div>
+          <div class="line"><span id="s3-line">So he built the wire first.</span></div>
+        </div>
+      </section>
+
+      <!-- S4 · 1908, The Trust -->
+      <section id="s4" class="clip" data-start="9.035" data-duration="2.407" data-track-index="0">
+        <div class="scene">
+          <div id="s4-beam"></div>
+          <svg id="s4-left" class="sprockets" viewBox="0 0 120 1700" aria-hidden="true"></svg>
+          <svg id="s4-right" class="sprockets" viewBox="0 0 120 1700" aria-hidden="true"></svg>
+          <div id="s4-super" class="super" style="left: 240px">1908 &middot; The Trust</div>
+          <div id="s4-stack">
+            <div id="s4-a">The film stock.</div>
+            <div id="s4-b">The reels.</div>
+            <div id="s4-c">The theaters.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S5 · The twist: AC travels farther -->
+      <section id="s5" class="clip" data-start="11.442" data-duration="2.639" data-track-index="0">
+        <div class="scene">
+          <div id="s5-sky"></div>
+          <svg id="s5-svg" viewBox="0 0 1920 1080" aria-hidden="true">
+            <g id="s5-poles"></g>
+            <polyline id="s5-wire" fill="none" stroke="#e9e4da" stroke-width="2.5" points="" />
+          </svg>
+          <div id="s5-super" class="super">1896 &middot; AC vs DC</div>
+          <div id="s5-text">
+            <div id="s5-a">He lost only once,</div>
+            <div id="s5-b">to a current that traveled <span class="glow-word">farther.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S6 · Every era has a switchboard -->
+      <section id="s6" class="clip" data-start="14.081" data-duration="1.88" data-track-index="0">
+        <div class="scene">
+          <img id="s6-img" class="plate" src="assets/img/switchboard.jpg" alt="" />
+          <div class="scrim"></div>
+          <div class="line"><span id="s6-line">Every era has a switchboard.</span></div>
+        </div>
+      </section>
+
+      <!-- S7 · 2026, color: the current -->
+      <section id="s7" class="clip" data-start="15.961" data-duration="4.389" data-track-index="0">
+        <div class="scene">
+          <div id="s7-bg"></div>
+          <div id="s7-grid"></div>
+          <div id="s7-super" class="super">2026 &middot; The AI Race</div>
+          <div id="s7-watch">
+            <div class="lbl">FORM TO MEETING</div>
+            <div id="s7-time">00:00.00</div>
+            <div class="dram">DRAMATIZATION</div>
+          </div>
+          <div id="s7-head">
+            <div id="s7-h1">Nobody remembers who built it first.</div>
+            <div id="s7-h2">They remember who <em>got there first.</em></div>
+          </div>
+          <svg id="s7-wire" viewBox="0 0 1920 1080" aria-hidden="true">
+            <line x1="280" y1="660" x2="1640" y2="660" stroke="#1b2f40" stroke-width="3" />
+            <line id="s7-live" x1="280" y1="660" x2="1640" y2="660" stroke="#8fe6ff" stroke-width="3" />
+          </svg>
+          <div id="s7-nodes">
+            <div class="node" id="n0"><div class="k">FORM</div><div class="v">Book a demo</div></div>
+            <div class="node" id="n1"><div class="k">ENRICH</div><div class="v">Acme &middot; 412 emp &middot; B</div></div>
+            <div class="node" id="n2"><div class="k">QUALIFY</div><div class="v">ICP fit 94/100</div></div>
+            <div class="node" id="n3"><div class="k">ROUTE</div><div class="v">Maya R. &middot; AE West</div></div>
+            <div class="node" id="n4"><div class="k">BOOKED</div><div class="v">Tue 10:00 &middot; sent</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S8 · Anyone can build the bulb -->
+      <section id="s8" class="clip" data-start="20.35" data-duration="2.05" data-track-index="0">
+        <div class="scene">
+          <img id="s8-img" class="plate" src="assets/img/tower.jpg" alt="" />
+          <div class="scrim"></div>
+          <div id="s8-text">Anyone can build the bulb.</div>
+        </div>
+      </section>
+
+      <!-- S9 · Payoff -->
+      <section id="s9" class="clip" data-start="22.4" data-duration="2.6" data-track-index="0">
+        <div id="s9-wrap">
+          <div id="s9-title">DISTRIBUTION IS THE PRODUCT.</div>
+          <div id="s9-rule"></div>
+          <div id="s9-own">Own the current.</div>
+          <div id="s9-brand"><div id="s9-logo">Default</div><div id="s9-url">default.com</div></div>
+        </div>
+      </section>
+
+      <!-- Flare bridging B&W into color -->
+      <div id="flare" class="clip overlay" data-start="15.5" data-duration="1.0" data-track-index="1" data-layout-ignore></div>
+
+      <!-- Film treatment (untimed, full length) -->
+      <div id="grain" class="overlay" data-layout-ignore></div>
+      <div id="flicker" class="overlay" data-layout-ignore></div>
+      <div id="vignette" class="overlay" data-layout-ignore></div>
+
+      <audio id="score" src="assets/audio/score.wav" data-start="0" data-duration="25" data-track-index="2" data-volume="1"></audio>
+    </div>
+
+    <script>
+      // Shared tick map (generated by scripts/make_score.py; same numbers drive the audio).
+      const TICKS = [0.25, 1.237, 2.176, 3.071, 3.926, 4.744, 5.529, 6.283, 7.009, 7.708, 8.383, 9.035, 9.665, 10.276, 10.867, 11.442, 12.541, 13.068, 13.581, 14.081, 14.569, 15.044, 15.508, 15.961, 16.404, 16.837, 17.26, 17.674, 18.08, 18.477, 18.866, 19.248, 19.622, 19.99, 20.35, 20.9, 21.7];
+      const NODES = [16.404, 16.837, 17.26, 17.674, 18.08];
+      const HIT = 22.4;
+      const COLOR_AT = 15.961;
+
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const rand = mulberry32(1882);
+      const NS = "http://www.w3.org/2000/svg";
+      const svgEl = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+
+      // ---------- static setup: Pearl Street facades ----------
+      const buildings = [
+        { x: 150, y: 250, w: 520, h: 562, cols: 6, rows: 6 },
+        { x: 720, y: 330, w: 470, h: 482, cols: 5, rows: 6 },
+        { x: 1240, y: 290, w: 540, h: 522, cols: 6, rows: 5 },
+      ];
+      const bG = document.getElementById("s3-buildings");
+      const wG = document.getElementById("s3-windows");
+      const windows = [];
+      buildings.forEach((b) => {
+        bG.appendChild(svgEl("rect", { x: b.x, y: b.y, width: b.w, height: b.h, fill: "#0e0e0e", stroke: "#2a2a2a", "stroke-width": 2 }));
+        bG.appendChild(svgEl("rect", { x: b.x - 12, y: b.y - 18, width: b.w + 24, height: 18, fill: "#151515" }));
+        const padX = 46, padY = 50, gw = (b.w - padX * 2) / b.cols, gh = (b.h - padY * 2) / b.rows;
+        for (let r = 0; r < b.rows; r++) for (let c = 0; c < b.cols; c++) {
+          const x = b.x + padX + c * gw + gw * 0.22, y = b.y + padY + r * gh + gh * 0.14;
+          wG.appendChild(svgEl("rect", { x, y, width: gw * 0.56, height: gh * 0.66, fill: "#161616" }));
+          const lit = svgEl("rect", { x, y, width: gw * 0.56, height: gh * 0.66, fill: "#ffd49a", opacity: 0 });
+          wG.appendChild(lit);
+          windows.push(lit);
+        }
+      });
+      // 96 windows, 82 customers. Seeded order.
+      const order = windows.map((w, i) => ({ w, k: rand() })).sort((a, b) => a.k - b.k).map((o) => o.w);
+      const customers = order.slice(0, 82);
+
+      // ---------- static setup: sprocket strips ----------
+      ["s4-left", "s4-right"].forEach((id) => {
+        const s = document.getElementById(id);
+        s.appendChild(svgEl("rect", { x: 0, y: 0, width: 120, height: 1700, fill: "#111" }));
+        for (let y = 20; y < 1700; y += 85) s.appendChild(svgEl("rect", { x: 34, y, width: 52, height: 44, rx: 8, fill: "#e8e2d6", opacity: 0.85 }));
+      });
+
+      // ---------- static setup: AC poles to the horizon ----------
+      const polesG = document.getElementById("s5-poles");
+      const VP = { x: 1560, y: 590 };
+      const wirePts = [];
+      for (let i = 0; i < 11; i++) {
+        const s = Math.pow(0.68, i);
+        const baseX = VP.x + (60 - VP.x) * s, baseY = VP.y + (1080 - VP.y) * s;
+        const hgt = 820 * s, arm = 150 * s;
+        const topY = baseY - hgt;
+        polesG.appendChild(svgEl("line", { x1: baseX, y1: baseY, x2: baseX, y2: topY, stroke: "#0a0a0a", "stroke-width": Math.max(1.5, 22 * s) }));
+        polesG.appendChild(svgEl("line", { x1: baseX - arm, y1: topY + 14 * s, x2: baseX + arm, y2: topY + 14 * s, stroke: "#0a0a0a", "stroke-width": Math.max(1, 10 * s) }));
+        wirePts.push(`${(baseX + arm * 0.8).toFixed(1)},${(topY + 10 * s).toFixed(1)}`);
+      }
+      wirePts.push(`${VP.x},${VP.y - 4}`);
+      const wire = document.getElementById("s5-wire");
+      wire.setAttribute("points", wirePts.join(" "));
+      let wireLen = 0;
+      for (let i = 1; i < wirePts.length; i++) {
+        const [ax, ay] = wirePts[i - 1].split(",").map(Number), [bx, by] = wirePts[i].split(",").map(Number);
+        wireLen += Math.hypot(bx - ax, by - ay);
+      }
+      wire.setAttribute("stroke-dasharray", wireLen);
+      wire.setAttribute("stroke-dashoffset", wireLen);
+      document.getElementById("s3-cable").setAttribute("stroke-dasharray", 1920);
+      document.getElementById("s3-cable").setAttribute("stroke-dashoffset", 1920);
+      document.getElementById("s7-live").setAttribute("stroke-dasharray", 1360);
+      document.getElementById("s7-live").setAttribute("stroke-dashoffset", 1360);
+
+      // ---------- timeline ----------
+      const tl = gsap.timeline({ paused: true });
+      const rise = (sel, at, d = 0.7) => tl.fromTo(sel, { opacity: 0, y: 26, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: d, ease: "power3.out" }, at);
+
+      // S1: ignite on the first tick
+      tl.fromTo("#s1-fil", { stroke: "#3a2a1a" }, { stroke: "#ffb45a", duration: 0.12, ease: "none" }, 0.25);
+      tl.fromTo("#s1-glow", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }, 0.25);
+      [0.78, 0.86, 0.94].forEach((t, i) => tl.to("#s1-glow", { opacity: i % 2 ? 1 : 0.55, duration: 0.05, ease: "none" }, t));
+      tl.to("#s1-glow", { scale: 1.12, duration: 2.0, ease: "sine.inOut" }, 1.0);
+      rise("#s1-year", 0.35, 0.6);
+      rise("#s1-line", 0.8);
+
+      // S2: slow push on the giant bulb
+      tl.fromTo("#s2-img", { scale: 1.04, xPercent: 0 }, { scale: 1.16, xPercent: 2, duration: 2.46, ease: "none" }, 3.071);
+      rise("#s2-line", 3.2);
+
+      // S3: the wire, then 82 customers
+      tl.to("#s3-cable", { attr: { "stroke-dashoffset": 0 }, duration: 0.7, ease: "power2.inOut" }, 5.6);
+      rise("#s3-super", 5.6, 0.5);
+      customers.forEach((w, i) => {
+        const t = 6.15 + 1.9 * Math.pow(i / 81, 0.62);
+        tl.to(w, { opacity: 1, duration: 0.08, ease: "none" }, t);
+        tl.set("#s3-n", { textContent: String(i + 1) }, t);
+      });
+      rise("#s3-line", 6.3);
+      tl.fromTo("#s3-svg", { scale: 1 }, { scale: 1.05, duration: 3.5, ease: "none", transformOrigin: "50% 60%" }, 5.529);
+
+      // S4: words land on ticks, the strips run like a projector gate
+      tl.fromTo(".sprockets", { y: 0 }, { y: -425, duration: 2.4, ease: "none" }, 9.035);
+      rise("#s4-super", 9.1, 0.4);
+      tl.fromTo("#s4-a", { opacity: 0 }, { opacity: 1, duration: 0.08 }, 9.12);
+      tl.fromTo("#s4-b", { opacity: 0 }, { opacity: 1, duration: 0.08 }, 9.665);
+      tl.fromTo("#s4-c", { opacity: 0 }, { opacity: 1, duration: 0.08 }, 10.276);
+      tl.fromTo("#s4-beam", { opacity: 0.6 }, { opacity: 1, duration: 2.4, ease: "none" }, 9.035);
+
+      // S5: the stumble; the wire runs to the horizon
+      rise("#s5-super", 11.5, 0.4);
+      rise("#s5-a", 11.55, 0.6);
+      tl.to("#s5-wire", { attr: { "stroke-dashoffset": 0 }, duration: 2.2, ease: "power2.inOut" }, 11.6);
+      rise("#s5-b", 12.3, 0.6);
+      tl.fromTo("#s5-svg", { scale: 1 }, { scale: 1.06, duration: 2.64, ease: "none", transformOrigin: "80% 55%" }, 11.442);
+
+      // S6: switchboard push, then the flare into color
+      tl.fromTo("#s6-img", { scale: 1.04 }, { scale: 1.2, duration: 1.88, ease: "power1.in", transformOrigin: "42% 52%" }, 14.081);
+      rise("#s6-line", 14.15, 0.5);
+      tl.fromTo("#flare", { opacity: 0 }, { opacity: 1, duration: 0.46, ease: "power2.in" }, 15.5);
+      tl.to("#flare", { opacity: 0, duration: 0.5, ease: "power2.out" }, 15.961);
+
+      // S7: the current, in seconds
+      rise("#s7-super", 16.0, 0.4);
+      rise("#s7-h1", 16.05, 0.6);
+      tl.to("#s7-h1", { opacity: 0, y: -16, duration: 0.3, ease: "power2.in" }, 18.15);
+      rise("#s7-h2", 18.4, 0.6);
+      const watch = { v: 0 };
+      const fmt = (v) => "00:" + String(Math.floor(v)).padStart(2, "0") + "." + String(Math.floor((v % 1) * 100)).padStart(2, "0");
+      tl.fromTo(watch, { v: 0 }, { v: 9, duration: NODES[4] - 16.1, ease: "none", onUpdate: () => { document.getElementById("s7-time").textContent = fmt(watch.v); } }, 16.1);
+      tl.set("#s7-time", { color: "#f4bb6c" }, NODES[4]);
+      tl.to("#s7-live", { attr: { "stroke-dashoffset": 0 }, duration: NODES[4] - NODES[0], ease: "none" }, NODES[0]);
+      tl.fromTo("#s7-nodes .node", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: "power3.out" }, 16.0);
+      NODES.forEach((t, i) => {
+        const last = i === 4;
+        tl.to(`#n${i}`, { borderColor: last ? "#f4bb6c" : "#8fe6ff", boxShadow: last ? "0 0 36px rgba(244,187,108,0.55)" : "0 0 28px rgba(143,230,255,0.35)", duration: 0.15, ease: "power2.out" }, t);
+        tl.to(`#n${i} .k`, { color: last ? "#f4bb6c" : "#8fe6ff", duration: 0.15 }, t);
+        tl.to(`#n${i} .v`, { color: last ? "#ffe6c2" : "#cfeaf5", duration: 0.15 }, t);
+        tl.fromTo(`#n${i}`, { scale: 1 }, { scale: 1.06, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1 }, t);
+      });
+
+      // S8: control
+      tl.fromTo("#s8-img", { scale: 1.0 }, { scale: 1.07, duration: 2.05, ease: "none", transformOrigin: "40% 60%" }, 20.35);
+      rise("#s8-text", 20.45, 0.6);
+
+      // S9: hit, then silence
+      tl.fromTo("#s9-title", { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 1.6, ease: "expo.out" }, HIT);
+      tl.fromTo("#s9-rule", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.9, ease: "power3.inOut" }, 22.9);
+      rise("#s9-own", 23.2, 0.6);
+      rise("#s9-brand", 23.6, 0.6);
+
+      // ---------- film treatment: grain + flicker, 24 steps/sec, seeded ----------
+      const grainRand = mulberry32(1908);
+      for (let f = 0; f < 25 * 24; f++) {
+        const t = f / 24;
+        tl.set("#grain", { backgroundPosition: `${Math.floor(grainRand() * 512)}px ${Math.floor(grainRand() * 512)}px` }, t);
+        const bw = t < COLOR_AT;
+        const flick = bw ? grainRand() * 0.13 : 0;
+        tl.set("#flicker", { opacity: flick }, t);
+      }
+      tl.set("#grain", { opacity: 0.22 }, 0);
+      tl.set("#grain", { opacity: 0.08 }, COLOR_AT);
+      tl.set("#grain", { opacity: 0.12 }, HIT);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
